@@ -1,4 +1,5 @@
 from asyncio import IocpProactor
+from cgitb import small
 import game
 import pygame
 from components.obstacles.cactus import Cactus
@@ -25,19 +26,22 @@ class ObstacleManager():
             if cactus_size == 1:
                 self.obstacles.append(Cactus(LARGE_CACTUS))
             elif cactus_size == 2:
-                self.obstacles.append(Cactus(SMALL_CACTUS))
-                self.image_rect.y -= 20
+                small_cactus = Cactus(SMALL_CACTUS, 320)
+                #small_cactus.size = 320
+                #small_cactus.image_rect.y = 320   
+                self.obstacles.append(Cactus(small_cactus))
+                
                    
 
         for obstacle in self.obstacles:
             obstacle.update()
             
-            #if obstacle.image_rect.x < -obstacle.image_rect.width:
-             #   self.obstacles.pop()
+            if obstacle.image_rect.x < -obstacle.image_rect.width:
+                self.obstacles.pop()
             if game.dino.dino_rectcolliderect(obstacle.image_rect):
                 pygame.time.delay(500)
                 game.death_count +=1
-                self.obstacles.cpop()
+                self.obstacles.pop()
                 if game.death_count == 5:
                     game.playing = False
                     print(game.death_count)
