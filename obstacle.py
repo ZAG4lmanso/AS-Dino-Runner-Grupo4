@@ -1,3 +1,7 @@
+
+
+
+
 from pygame.sprite import Sprite
 from email.mime import image
 from utils.constants import SCREEN_WIDTH
@@ -14,5 +18,5 @@ class Obstacle(Sprite):
     
     def update(self, game):
         self.image_rect.x = game
-            
+
 
